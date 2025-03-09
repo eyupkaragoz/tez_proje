@@ -19,7 +19,9 @@
 </head>
 
 <body>
-  <?php include("navbar.php") ?>
+  <?php
+  include("connect.php");
+  include("navbar.php") ?>
   <!-- slider başlangıç   -->
   <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
