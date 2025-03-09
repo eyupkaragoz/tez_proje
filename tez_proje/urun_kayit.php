@@ -1,5 +1,35 @@
 <?php
+if (isset($_POST['is_kayit'])) {
+    $hizmet_baslik = $_POST['hizmet_baslik'];
+    $hizmet_aciklama = $_POST['hizmet_aciklama'];
+    $dosya_adi = $_FILES["hizmet_img"]["name"];
+    $yeni_ad = "../img/" . $dosya_adi;
+    if (move_uploaded_file($_FILES["hizmet_img"]["tmp_name"], $yeni_ad)) {
 
+        $sorgu = $db->prepare("INSERT INTO hizmetler SET
+      hizmet_baslik = ?,
+      hizmet_aciklama = ?,
+      hizmet_img = ?
+    ");
+        $sorgu->execute([$hizmet_baslik, $hizmet_aciklama, $dosya_adi]);
+        if ($sorgu) {
+            echo "<script>
+      location.href='hizmetler.php';
+      alert('Yükleme başarılı.');
+      </script>";
+        } else {
+            echo "<script>
+        location.href='hizmet_kayit.php';
+        alert('Bir problem oluştu.');
+        </script>";
+        }
+    } else {
+        echo "<script>
+      location.href='hizmet_kayit.php';
+      alert('Lütfen fotoğraf seçiniz.');
+      </script>";
+    }
+}
 
 
 
@@ -78,7 +108,7 @@
                     <input type="text" placeholder="Şehir" required />
                 </div>
             </div>
-            <button>Submit</button>
+            <button name="is_kayit">Kaydet</button>
         </form>
     </section>
 </body>
